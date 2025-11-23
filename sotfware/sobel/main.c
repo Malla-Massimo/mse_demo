@@ -12,8 +12,6 @@
 #include "sys/alt_timestamp.h"
 #include "alt_types.h"
 
-#define MAX_WIDTH   320
-#define MAX_HEIGHT  240
 
 int main() {
 
@@ -114,8 +112,8 @@ int main() {
 				default:
 					;
 					alt_u32 gray_start = alt_timestamp();
-					conv_grayscale((void *) image, cam_get_xsize() >> 1, cam_get_ysize());
-					//conv_grayscale_lut((void *) image, cam_get_xsize() >> 1, cam_get_ysize());
+					//conv_grayscale((void *) image, cam_get_xsize() >> 1, cam_get_ysize());
+					conv_grayscale_lut((void *) image, cam_get_xsize() >> 1, cam_get_ysize());
 
 					grayscale = get_grayscale_picture();
 
@@ -129,13 +127,15 @@ int main() {
 					alt_u32 end_sobelY = alt_timestamp();
 					//sobel_threshold(128);
 					grayscale = GetSobelResult();
-					transfer_LCD_with_dma(&grayscale[16520],
-							cam_get_xsize() >> 1, cam_get_ysize(), 1);
 
 					alt_u32 gray_conv_time = gray_end - gray_start;
 					alt_u32 sb2_y = end_sobelY - mid_sobel;
 					printf("Gray conv : %u\n", gray_conv_time);
 					printf("Sobel complete : %u\n", sb2_y);
+
+					transfer_LCD_with_dma(&grayscale[16520],
+							cam_get_xsize() >> 1, cam_get_ysize(), 1);
+
 
 					if ((current_mode & DIPSW_SW8_MASK) != 0) {
 						vga_set_swap(VGA_QuarterScreen | VGA_Grayscale);

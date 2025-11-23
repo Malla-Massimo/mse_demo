@@ -150,13 +150,13 @@ void sobel_complete(unsigned char *source ){
 	int x, y;
 	int sum;
 
-	for (y = 1; y < HEIGHT - 1; y++) {
+	for (y = 1; y < sobel_height - 1; y++) {
 
-		int y_minus_1_width =(y-1)*WIDTH;
-		int y_width = y*WIDTH;
-		int y_add_1_width = (y+1)*WIDTH;
+		int y_minus_1_width =(y-1)*sobel_width;
+		int y_width = y*sobel_width;
+		int y_add_1_width = (y+1)*sobel_width;
 
-		for (x = 1; x < WIDTH - 1; x++) {
+		for (x = 1; x < sobel_width - 1; x++) {
 
 			int x_minus_1 = x-1;
 			int x_add_1 = x+1;
@@ -226,54 +226,6 @@ void sobel_complete(unsigned char *source ){
 
 			printf("X good, %d\n", gxx);
 			printf("Y good, %d\n", gyy);*/
-		}
-	}
-}
-
-void grayscale_sobel_complete(unsigned char *source ){
-	int x, y;
-	int sum;
-
-	for (y = 1; y < HEIGHT - 1; y++) {
-
-		int y_minus_1_width =(y-1)*WIDTH;
-		int y_width = y*WIDTH;
-		int y_add_1_width = (y+1)*WIDTH;
-
-		for (x = 1; x < WIDTH - 1; x++) {
-
-			int x_minus_1 = x-1;
-			int x_add_1 = x+1;
-			short gx = 0;
-			short gy = 0;
-
-			int source_y_min_x_min = source[y_minus_1_width + x_minus_1];
-			int source_y_min_x_add = source[y_minus_1_width + x_add_1];
-			int source_y_add_x_min = source[y_add_1_width + x_minus_1];
-			int source_y_add_x_add = source[y_add_1_width + x_add_1];
-
-			gx += -source_y_min_x_min +
-					source_y_min_x_add -
-					(source[y_width + x_minus_1]<<1) +
-					(source[y_width + x_add_1]<<1) -
-					source_y_add_x_min +
-					source_y_add_x_add;
-
-			gy += source_y_min_x_min +
-					(source[y_minus_1_width + x]<<1) +
-					source_y_min_x_add -
-					source_y_add_x_min -
-					(source[y_add_1_width + x]<<1) -
-					source_y_add_x_add;
-
-			//sobel_x_result[y_width + x] = gx;
-			//sobel_y_result[y_width + x] = gy;
-
-			// Threshold
-			sum = (gx < 0) ? -gx : gx;
-			sum += (gy < 0) ? -gy : gy;
-			sobel_result[y_width + x] = (sum > 128) ? 0xFF : 0;
-
 		}
 	}
 }

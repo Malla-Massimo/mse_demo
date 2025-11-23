@@ -13,8 +13,6 @@ unsigned char *grayscale_array;
 int grayscale_width = 0;
 int grayscape_height = 0;
 
-#define WIDTH  320
-#define HEIGHT 240
 
 static unsigned char gray_lut[65536];
 
@@ -48,6 +46,7 @@ void conv_grayscale(void *picture,
 }
 
 void init_gray_lut(void) {
+	printf("Create LUT grayscale\n");
     for (int i = 0; i < 65536; i++) {
         int gray =
             (((i >> 11) & 0x1F) * 168) +
@@ -55,6 +54,7 @@ void init_gray_lut(void) {
             (((i >> 0)  & 0x1F) * 56);
         gray_lut[i] = gray / 100;
     }
+    printf("Finished LUT grayscale");
 }
 
 void conv_grayscale_lut(void *picture,
@@ -75,12 +75,17 @@ void conv_grayscale_lut(void *picture,
 		int row = y * width;  // common expression
 
 		for (int x = 0; x < width; x++) {
-			int pos = row + x;
-			unsigned char gray = gray_lut[pixels[pos]];  // <-- LUT replaces all math
+			int raw = row + x;
+			//int rgb = rgb565_swap(raw);
+			unsigned char gray = gray_lut[pixels[raw]];  // <-- LUT replaces all math
 
-			IOWR_8DIRECT(grayscale_array, pos, gray);  // identical to your original code
+			IOWR_8DIRECT(grayscale_array, raw, gray);  // identical to your original code
 		}
 	}
+}
+int rgb565_swap(int v)
+{
+    return (v >> 8) | (v << 8);
 }
 
 int get_grayscale_width() {

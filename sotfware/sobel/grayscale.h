@@ -14,5 +14,7 @@ void conv_grayscale(void *picture,
 int get_grayscale_width();
 int get_grayscale_height();
 unsigned char *get_grayscale_picture();
+void conv_grayscale_lut();
+void init_gray_lut();
 
 #endif /* GRAYSCALE_H_ */
