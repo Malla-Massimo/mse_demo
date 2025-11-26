@@ -4,7 +4,7 @@
  * Machine generated for CPU 'nios2_gen2_0' in SOPC Builder design 'base_system'
  * SOPC Builder design path: C:/master/EmbHard/mse_demo/quartus_project/base_system.sopcinfo
  *
- * Generated: Wed Nov 19 15:04:24 CET 2025
+ * Generated: Wed Nov 26 14:41:36 CET 2025
  */
 
 /*
