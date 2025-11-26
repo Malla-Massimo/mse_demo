@@ -1,5 +1,5 @@
 Flow report for mse_demo
-Wed Nov 19 15:02:54 2025
+Tue Nov 25 10:35:19 2025
 Quartus Prime Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
 
 
@@ -40,20 +40,20 @@ refer to the applicable agreement for further details.
 +----------------------------------------------------------------------------------+
 ; Flow Summary                                                                     ;
 +------------------------------------+---------------------------------------------+
-; Flow Status                        ; Successful - Wed Nov 19 15:02:49 2025       ;
+; Flow Status                        ; Successful - Tue Nov 25 10:35:12 2025       ;
 ; Quartus Prime Version              ; 18.1.0 Build 625 09/12/2018 SJ Lite Edition ;
 ; Revision Name                      ; mse_demo                                    ;
 ; Top-level Entity Name              ; mse_demo                                    ;
 ; Family                             ; Cyclone IV E                                ;
 ; Device                             ; EP4CE30F23C7                                ;
 ; Timing Models                      ; Final                                       ;
-; Total logic elements               ; 7,747 / 28,848 ( 27 % )                     ;
-;     Total combinational functions  ; 6,851 / 28,848 ( 24 % )                     ;
-;     Dedicated logic registers      ; 4,668 / 28,848 ( 16 % )                     ;
-; Total registers                    ; 4736                                        ;
+; Total logic elements               ; 9,724 / 28,848 ( 34 % )                     ;
+;     Total combinational functions  ; 8,609 / 28,848 ( 30 % )                     ;
+;     Dedicated logic registers      ; 5,698 / 28,848 ( 20 % )                     ;
+; Total registers                    ; 5766                                        ;
 ; Total pins                         ; 121 / 329 ( 37 % )                          ;
 ; Total virtual pins                 ; 0                                           ;
-; Total memory bits                  ; 122,240 / 608,256 ( 20 % )                  ;
+; Total memory bits                  ; 432,128 / 608,256 ( 71 % )                  ;
 ; Embedded Multiplier 9-bit elements ; 6 / 132 ( 5 % )                             ;
 ; Total PLLs                         ; 1 / 4 ( 25 % )                              ;
 +------------------------------------+---------------------------------------------+
@@ -64,7 +64,7 @@ refer to the applicable agreement for further details.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 11/19/2025 15:00:48 ;
+; Start date & time ; 11/25/2025 10:32:53 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; mse_demo            ;
 +-------------------+---------------------+
@@ -75,7 +75,7 @@ refer to the applicable agreement for further details.
 +-------------------------------------+----------------------------------------+---------------+-------------+------------+
 ; Assignment Name                     ; Value                                  ; Default Value ; Entity Name ; Section Id ;
 +-------------------------------------+----------------------------------------+---------------+-------------+------------+
-; COMPILER_SIGNATURE_ID               ; 97221508898264.176356084803708         ; --            ; --          ; --         ;
+; COMPILER_SIGNATURE_ID               ; 97221508898264.176406317307620         ; --            ; --          ; --         ;
 ; MAX_CORE_JUNCTION_TEMP              ; 85                                     ; --            ; --          ; --         ;
 ; MIN_CORE_JUNCTION_TEMP              ; 0                                      ; --            ; --          ; --         ;
 ; PARTITION_COLOR                     ; -- (Not supported for targeted family) ; --            ; --          ; Top        ;
@@ -91,11 +91,11 @@ refer to the applicable agreement for further details.
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name          ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Synthesis ; 00:01:20     ; 1.0                     ; 5050 MB             ; 00:01:53                           ;
-; Fitter               ; 00:00:33     ; 1.2                     ; 5699 MB             ; 00:00:52                           ;
-; Assembler            ; 00:00:02     ; 1.0                     ; 4715 MB             ; 00:00:02                           ;
-; Timing Analyzer      ; 00:00:04     ; 1.5                     ; 4903 MB             ; 00:00:06                           ;
-; Total                ; 00:01:59     ; --                      ; --                  ; 00:02:53                           ;
+; Analysis & Synthesis ; 00:01:24     ; 1.0                     ; 5088 MB             ; 00:01:58                           ;
+; Fitter               ; 00:00:46     ; 1.2                     ; 5798 MB             ; 00:01:09                           ;
+; Assembler            ; 00:00:02     ; 1.0                     ; 4719 MB             ; 00:00:02                           ;
+; Timing Analyzer      ; 00:00:05     ; 1.5                     ; 4929 MB             ; 00:00:06                           ;
+; Total                ; 00:02:17     ; --                      ; --                  ; 00:03:15                           ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 

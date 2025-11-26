@@ -269,3 +269,52 @@ unsigned short *GetSobel_rgb() {
 unsigned char *GetSobelResult() {
 	return sobel_result;
 }
+
+
+void sobel_complete_block(unsigned char *gray,
+                          unsigned char *sobel_out,
+                          int width,
+                          int height,
+                          int y_start,
+                          int y_end)
+{
+    // we can’t process the very first and last row
+    if (y_start < 1)         y_start = 1;
+    if (y_end   > height-1)  y_end   = height-1;
+
+    for (int y = y_start; y < y_end; y++) {
+
+        int y0 = (y - 1) * width;
+        int y1 = y * width;
+        int y2 = (y + 1) * width;
+
+        for (int x = 1; x < width - 1; x++) {
+
+            int x0 = x - 1;
+            int x2 = x + 1;
+
+            int p00 = gray[y0 + x0];
+            int p01 = gray[y0 + x];
+            int p02 = gray[y0 + x2];
+
+            int p10 = gray[y1 + x0];
+            int p11 = gray[y1 + x];
+            int p12 = gray[y1 + x2];
+
+            int p20 = gray[y2 + x0];
+            int p21 = gray[y2 + x];
+            int p22 = gray[y2 + x2];
+
+            int gx = -p00 + p02
+                   - 2*p10 + 2*p12
+                   - p20 + p22;
+
+            int gy =  p00 + 2*p01 + p02
+                    - p20 - 2*p21 - p22;
+
+            int mag = (gx < 0 ? -gx : gx) + (gy < 0 ? -gy : gy);
+
+            sobel_result[y1 + x] = (mag > 128) ? 0xFF : 0;
+        }
+    }
+}

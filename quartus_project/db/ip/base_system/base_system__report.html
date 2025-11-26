@@ -67,7 +67,7 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
   </table>
   <table class="blueBar">
    <tr>
-    <td class="l">2025.11.19.15:01:03</td>
+    <td class="l">2025.11.25.10:33:08</td>
     <td class="r">Datasheet</td>
    </tr>
   </table>
@@ -2913,7 +2913,7 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
        </tr>
        <tr>
         <td class="parametername">icache_size</td>
-        <td class="parametervalue">4096</td>
+        <td class="parametervalue">8192</td>
        </tr>
        <tr>
         <td class="parametername">fa_cache_line</td>
@@ -2949,7 +2949,7 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
        </tr>
        <tr>
         <td class="parametername">dcache_size</td>
-        <td class="parametervalue">0</td>
+        <td class="parametervalue">32768</td>
        </tr>
        <tr>
         <td class="parametername">dcache_tagramBlockType</td>
@@ -3197,7 +3197,7 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
        </tr>
        <tr>
         <td class="parametername">dcache_size_derived</td>
-        <td class="parametervalue">0</td>
+        <td class="parametervalue">32768</td>
        </tr>
        <tr>
         <td class="parametername">breakSlave_derived</td>
@@ -3213,7 +3213,7 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
        </tr>
        <tr>
         <td class="parametername">setting_bit31BypassDCache</td>
-        <td class="parametervalue">false</td>
+        <td class="parametervalue">true</td>
        </tr>
        <tr>
         <td class="parametername">translate_on</td>
@@ -3441,16 +3441,20 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
         <td class="parametervalue">25</td>
        </tr>
        <tr>
+        <td class="parametername">DCACHE_BYPASS_MASK</td>
+        <td class="parametervalue">0x80000000</td>
+       </tr>
+       <tr>
         <td class="parametername">DCACHE_LINE_SIZE</td>
-        <td class="parametervalue">0</td>
+        <td class="parametervalue">32</td>
        </tr>
        <tr>
         <td class="parametername">DCACHE_LINE_SIZE_LOG2</td>
-        <td class="parametervalue">0</td>
+        <td class="parametervalue">5</td>
        </tr>
        <tr>
         <td class="parametername">DCACHE_SIZE</td>
-        <td class="parametervalue">0</td>
+        <td class="parametervalue">32768</td>
        </tr>
        <tr>
         <td class="parametername">EXCEPTION_ADDR</td>
@@ -3510,7 +3514,11 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
        </tr>
        <tr>
         <td class="parametername">ICACHE_SIZE</td>
-        <td class="parametervalue">4096</td>
+        <td class="parametervalue">8192</td>
+       </tr>
+       <tr>
+        <td class="parametername">INITDA_SUPPORTED</td>
+        <td class="parametervalue"></td>
        </tr>
        <tr>
         <td class="parametername">INST_ADDR_WIDTH</td>
@@ -4135,7 +4143,7 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
        </tr>
        <tr>
         <td class="parametername">timestamp</td>
-        <td class="parametervalue">1763560862</td>
+        <td class="parametervalue">1764063187</td>
        </tr>
        <tr>
         <td class="parametername">deviceFamily</td>
@@ -4160,7 +4168,7 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
        </tr>
        <tr>
         <td class="parametername">TIMESTAMP</td>
-        <td class="parametervalue">1763560862</td>
+        <td class="parametervalue">1764063187</td>
        </tr>
       </table>
      </td>
