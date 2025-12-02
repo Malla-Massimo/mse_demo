@@ -20,7 +20,9 @@ int main() {
 	unsigned char current_mode;
 	unsigned char mode;
 	init_LCD();
+	printf("LCD INIT\n");
 	init_camera();
+	printf("CAMERA INIT\n");
 	vga_set_swap(VGA_QuarterScreen | VGA_Grayscale);
 	printf("Hello from Nios II!\n");
 	cam_get_profiling();
@@ -37,14 +39,15 @@ int main() {
 	cam_set_image_pointer(2, buffer3);
 	cam_set_image_pointer(3, buffer4);
 	enable_continues_mode();
+
 	init_sobel_arrays(cam_get_xsize() >> 1, cam_get_ysize());
 
 	init_gray_lut();
 
 	do {
-		printf("************************\n");
 		if (new_image_available() != 0) {
 			if (current_image_valid() != 0) {
+				printf("*\n");
 				current_mode = DIPSW_get_value();
 				mode = current_mode
 						& (DIPSW_SW1_MASK | DIPSW_SW3_MASK | DIPSW_SW2_MASK);
@@ -111,18 +114,22 @@ int main() {
 					break;
 				default:
 					;
+					// Grayscale + sobel
+
 					alt_u32 gray_start = alt_timestamp();
-					//conv_grayscale((void *) image, cam_get_xsize() >> 1, cam_get_ysize());
+					sobel_grayscale_complete_crop((void *) image);
+					grayscale = GetSobelResult();
+					alt_u32 gray_end = alt_timestamp();
+					printf("Gray conv : %u\n", gray_end-gray_start);
+
+
+					/*
+					alt_u32 gray_start = alt_timestamp();
 					conv_grayscale_lut((void *) image, cam_get_xsize() >> 1, cam_get_ysize());
-
 					grayscale = get_grayscale_picture();
-
 					alt_u32 gray_end = alt_timestamp();
 
-					//alt_u32 start_sobelX = alt_timestamp();
-					//sobel_x(grayscale);
 					alt_u32 mid_sobel = alt_timestamp();
-					//sobel_y(grayscale);
 					sobel_complete(grayscale);
 					alt_u32 end_sobelY = alt_timestamp();
 					//sobel_threshold(128);
@@ -132,7 +139,7 @@ int main() {
 					alt_u32 sb2_y = end_sobelY - mid_sobel;
 					printf("Gray conv : %u\n", gray_conv_time);
 					printf("Sobel complete : %u\n", sb2_y);
-
+					*/
 					transfer_LCD_with_dma(&grayscale[16520],
 							cam_get_xsize() >> 1, cam_get_ysize(), 1);
 

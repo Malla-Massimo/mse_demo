@@ -340,38 +340,6 @@
 					"strict" : false
 				},
 				{
-					"name" : "DIPSW[6]",
-					"strict" : false
-				},
-				{
-					"name" : "DIPSW[5]",
-					"strict" : false
-				},
-				{
-					"name" : "DIPSW[4]",
-					"strict" : false
-				},
-				{
-					"name" : "DIPSW[3]",
-					"strict" : false
-				},
-				{
-					"name" : "DIPSW[2]",
-					"strict" : false
-				},
-				{
-					"name" : "DIPSW[1]",
-					"strict" : false
-				},
-				{
-					"name" : "DIPSW[0]",
-					"strict" : false
-				},
-				{
-					"name" : "DIPSW[7]",
-					"strict" : false
-				},
-				{
 					"name" : "CAM_D[9]",
 					"strict" : false
 				},
@@ -401,6 +369,38 @@
 				},
 				{
 					"name" : "CAM_D[2]",
+					"strict" : false
+				},
+				{
+					"name" : "DIPSW[7]",
+					"strict" : false
+				},
+				{
+					"name" : "DIPSW[6]",
+					"strict" : false
+				},
+				{
+					"name" : "DIPSW[5]",
+					"strict" : false
+				},
+				{
+					"name" : "DIPSW[4]",
+					"strict" : false
+				},
+				{
+					"name" : "DIPSW[3]",
+					"strict" : false
+				},
+				{
+					"name" : "DIPSW[2]",
+					"strict" : false
+				},
+				{
+					"name" : "DIPSW[1]",
+					"strict" : false
+				},
+				{
+					"name" : "DIPSW[0]",
 					"strict" : false
 				},
 				{

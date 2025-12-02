@@ -8,6 +8,11 @@
 #ifndef GRAYSCALE_H_
 #define GRAYSCALE_H_
 
+extern unsigned char *grayscale_array;
+extern int grayscale_width;
+extern int grayscape_height;
+extern unsigned char gray_lut[65536];
+
 void conv_grayscale(void *picture,
 		            int width,
 		            int height);

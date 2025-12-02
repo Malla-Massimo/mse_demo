@@ -8,6 +8,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "io.h"
+#include "grayscale.h"
+#include <system.h>
 
 #define WIDTH  320
 #define HEIGHT 240
@@ -189,43 +191,6 @@ void sobel_complete(unsigned char *source ){
 			sum = (gx < 0) ? -gx : gx;
 			sum += (gy < 0) ? -gy : gy;
 			sobel_result[y_width + x] = (sum > 128) ? 0xFF : 0;
-
-			/*
-			printf("X opt, %d\n", gx);
-			printf("Y opt, %d\n", gy);
-
-			short gxx = 0;
-			short gyy = 0;
-			// Top row
-			gxx += gx_array[0][0] * source[(y-1)*width + (x-1)];
-			gxx += gx_array[0][1] * source[(y-1)*width + x];
-			gxx += gx_array[0][2] * source[(y-1)*width + (x+1)];
-
-			gyy += gy_array[0][0] * source[(y-1)*width + (x-1)];
-			gyy += gy_array[0][1] * source[(y-1)*width + x];
-			gyy += gy_array[0][2] * source[(y-1)*width + (x+1)];
-
-			// Middle row
-			gxx += gx_array[1][0] * source[y*width + (x-1)];
-			gxx += gx_array[1][1] * source[y*width + x];
-			gxx += gx_array[1][2] * source[y*width + (x+1)];
-
-			gyy += gy_array[1][0] * source[y*width + (x-1)];
-			gyy += gy_array[1][1] * source[y*width + x];
-			gyy += gy_array[1][2] * source[y*width + (x+1)];
-
-			// Bottom row
-			gxx += gx_array[2][0] * source[(y+1)*width + (x-1)];
-			gxx += gx_array[2][1] * source[(y+1)*width + x];
-			gxx += gx_array[2][2] * source[(y+1)*width + (x+1)];
-
-			gyy += gy_array[2][0] * source[(y+1)*width + (x-1)];
-			gyy += gy_array[2][1] * source[(y+1)*width + x];
-			gyy += gy_array[2][2] * source[(y+1)*width + (x+1)];
-
-
-			printf("X good, %d\n", gxx);
-			printf("Y good, %d\n", gyy);*/
 		}
 	}
 }
@@ -268,4 +233,184 @@ unsigned short *GetSobel_rgb() {
 
 unsigned char *GetSobelResult() {
 	return sobel_result;
+}
+
+void sobel_grayscale_complete(void *picture)
+{
+    unsigned short *src = (unsigned short *)picture;
+    const unsigned char *lut = gray_lut;
+    unsigned char *dst = sobel_result;
+
+    const int w = sobel_width;
+    const int h = sobel_height;
+
+    for (int y = 1; y < h - 1; y++)
+    {
+        int ym = (y - 1) * w;
+        int yc =  y      * w;
+        int yp = (y + 1) * w;
+
+        unsigned short *row_m = src + ym;  // src pointers to each row
+        unsigned short *row_c = src + yc;
+        unsigned short *row_p = src + yp;
+
+        unsigned char *dst_row = dst + yc; // output row
+
+        for (int x = 1; x < w - 1; x++)
+        {
+            // Precompute neighbors for speed
+            unsigned char p00 = lut[row_m[x-1]];
+            unsigned char p01 = lut[row_m[x]];
+            unsigned char p02 = lut[row_m[x+1]];
+
+            unsigned char p10 = lut[row_c[x-1]];
+            //unsigned char p11 = lut[row_c[x]];
+            unsigned char p12 = lut[row_c[x+1]];
+
+            unsigned char p20 = lut[row_p[x-1]];
+            unsigned char p21 = lut[row_p[x]];
+            unsigned char p22 = lut[row_p[x+1]];
+
+            // Compute Gx and Gy EXACTLY as your original
+            short gx = -p00 + p02
+                       - ((short)p10 << 1)
+                       + ((short)p12 << 1)
+                       - p20 + p22;
+
+            short gy =  p00 + ((short)p01 << 1) + p02
+                       - p20 - ((short)p21 << 1) - p22;
+
+            int sum = (gx < 0 ? -gx : gx) + (gy < 0 ? -gy : gy);
+
+            dst_row[x] = (sum > 128) ? 0xFF : 0;
+        }
+    }
+}
+
+void sobel_grayscale_complete_fast(void *picture)
+{
+    unsigned short *src = (unsigned short *)picture;
+    const unsigned char *lut = gray_lut;
+    unsigned char *dst = sobel_result;
+
+    const int w = sobel_width;
+    const int h = sobel_height;
+
+    for (int y = 1; y < h - 1; y++)
+    {
+        int ym = (y - 1) * w;
+        int yc =  y      * w;
+        int yp = (y + 1) * w;
+
+        unsigned short *row_m = src + ym;  // src pointers to each row
+        unsigned short *row_c = src + yc;
+        unsigned short *row_p = src + yp;
+
+        unsigned char *dst_row = dst + yc; // output row
+
+        for (int x = 1; x < w - 1; x++)
+        {
+            // Precompute neighbors for speed
+            unsigned char p00 = lut[row_m[x-1]];
+            unsigned char p01 = lut[row_m[x]];
+            unsigned char p02 = lut[row_m[x+1]];
+
+            unsigned char p10 = lut[row_c[x-1]];
+            //unsigned char p11 = lut[row_c[x]];
+            unsigned char p12 = lut[row_c[x+1]];
+
+            unsigned char p20 = lut[row_p[x-1]];
+            unsigned char p21 = lut[row_p[x]];
+            unsigned char p22 = lut[row_p[x+1]];
+
+
+            unsigned int dataa =
+                  (unsigned int)p00
+                | ((unsigned int)p01 << 8)
+                | ((unsigned int)p02 << 16)
+                | ((unsigned int)p10 << 24);
+
+            unsigned int datab =
+                  (unsigned int)p12
+                | ((unsigned int)p20 << 8)
+                | ((unsigned int)p21 << 16)
+                | ((unsigned int)p22 << 24);
+
+            dst_row[x] = ALT_CI_SOBEL_0(dataa, datab);
+        }
+    }
+}
+
+
+void sobel_grayscale_complete_crop(void *picture)
+{
+    unsigned short *src = (unsigned short *)picture;
+    const unsigned char *lut = gray_lut;
+    unsigned char *dst = sobel_result;
+
+    const int w = sobel_width;   // camera width 512
+    const int h = sobel_height;  // camera height 384
+
+    // ---- LCD window parameters ----
+    const int lcd_offset = 16520;  // same as used in main.c
+    const int lcd_w = 240;
+    const int lcd_h = 320;
+
+    // Convert offset into (x,y) in the Sobel/camera buffer
+    int crop_y = lcd_offset / w;   // row
+    int crop_x = lcd_offset % w;   // column
+
+    // stay inside convolution borders
+    int y_start = crop_y;
+    int y_end   = crop_y + lcd_h - 1;
+    int x_start = crop_x;
+    int x_end   = crop_x + lcd_w - 1;
+
+    if (y_start < 1)     y_start = 1;
+    if (y_end   > h - 2) y_end   = h - 2;
+    if (x_start < 1)     x_start = 1;
+    if (x_end   > w - 2) x_end   = w - 2;
+
+    for (int y = y_start; y <= y_end; y++)
+    {
+        int ym = (y - 1) * w;
+        int yc =  y      * w;
+        int yp = (y + 1) * w;
+
+        unsigned short *row_m = src + ym;
+        unsigned short *row_c = src + yc;
+        unsigned short *row_p = src + yp;
+
+        unsigned char *dst_row = dst + yc;
+
+        for (int x = x_start; x <= x_end; x++)
+        {
+
+            unsigned char p00 = lut[row_m[x-1]];
+            unsigned char p01 = lut[row_m[x]];
+            unsigned char p02 = lut[row_m[x+1]];
+
+            unsigned char p10 = lut[row_c[x-1]];
+            // unsigned char p11 = lut[row_c[x]];
+            unsigned char p12 = lut[row_c[x+1]];
+
+            unsigned char p20 = lut[row_p[x-1]];
+            unsigned char p21 = lut[row_p[x]];
+            unsigned char p22 = lut[row_p[x+1]];
+
+            unsigned int dataa =
+                  (unsigned int)p00
+                | ((unsigned int)p01 << 8)
+                | ((unsigned int)p02 << 16)
+                | ((unsigned int)p10 << 24);
+
+            unsigned int datab =
+                  (unsigned int)p12
+                | ((unsigned int)p20 << 8)
+                | ((unsigned int)p21 << 16)
+                | ((unsigned int)p22 << 24);
+
+            dst_row[x] = ALT_CI_SOBEL_0(dataa, datab);
+        }
+    }
 }
