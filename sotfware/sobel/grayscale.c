@@ -12,9 +12,7 @@
 unsigned char *grayscale_array;
 int grayscale_width = 0;
 int grayscape_height = 0;
-
-
-static unsigned char gray_lut[65536];
+unsigned char gray_lut[65536];
 
 /*
 static unsigned char grayscale_array[MAX_W*MAX_H] __attribute__((aligned(32)));
@@ -83,6 +81,7 @@ void conv_grayscale_lut(void *picture,
 		}
 	}
 }
+
 int rgb565_swap(int v)
 {
     return (v >> 8) | (v << 8);
