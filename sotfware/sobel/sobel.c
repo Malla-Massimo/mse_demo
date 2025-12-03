@@ -352,11 +352,11 @@ void sobel_grayscale_complete_crop(void *picture)
     const int h = sobel_height;  // camera height 384
 
     // ---- LCD window parameters ----
-    const int lcd_offset = 16520;  // same as used in main.c
+    const int lcd_offset = 16520;  // same as used in main
     const int lcd_w = 240;
     const int lcd_h = 320;
 
-    // Convert offset into (x,y) in the Sobel/camera buffer
+    // Convert offset
     int crop_y = lcd_offset / w;   // row
     int crop_x = lcd_offset % w;   // column
 

@@ -122,27 +122,27 @@ int main() {
 					alt_u32 gray_end = alt_timestamp();
 					printf("Gray conv : %u\n", gray_end-gray_start);
 
-
 					/*
 					alt_u32 gray_start = alt_timestamp();
 					conv_grayscale_lut((void *) image, cam_get_xsize() >> 1, cam_get_ysize());
 					grayscale = get_grayscale_picture();
-					alt_u32 gray_end = alt_timestamp();
-
-					alt_u32 mid_sobel = alt_timestamp();
 					sobel_complete(grayscale);
+					grayscale = GetSobelResult();
+					alt_u32 end_sobelY = alt_timestamp();
+					printf("Sobel complete : %u\n", end_sobelY);
+					/*
+					/*
+					alt_u32 mid_sobel = alt_timestamp();
+					sobel_grayscale_complete((void *) image);
 					alt_u32 end_sobelY = alt_timestamp();
 					//sobel_threshold(128);
 					grayscale = GetSobelResult();
-
-					alt_u32 gray_conv_time = gray_end - gray_start;
 					alt_u32 sb2_y = end_sobelY - mid_sobel;
-					printf("Gray conv : %u\n", gray_conv_time);
 					printf("Sobel complete : %u\n", sb2_y);
 					*/
+
 					transfer_LCD_with_dma(&grayscale[16520],
 							cam_get_xsize() >> 1, cam_get_ysize(), 1);
-
 
 					if ((current_mode & DIPSW_SW8_MASK) != 0) {
 						vga_set_swap(VGA_QuarterScreen | VGA_Grayscale);
